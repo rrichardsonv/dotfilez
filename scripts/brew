@@ -6,9 +6,11 @@ brew update
 # Upgrade any already-installed formulae.
 brew upgrade
 
+# Install git
+brew install git
+
 # Install GNU core utilities (those that come with macOS are outdated).
 brew install coreutils
-
 # Install some other useful utilities like `sponge`.
 brew install moreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
@@ -31,7 +33,6 @@ brew install woff2
 # Install other useful binaries.
 brew install autojump
 brew install ack
-brew install git
 
 # Install rbenv
 brew install rbenv

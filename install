@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 set -e
+echo ''
+
+DOTFILES_ROOT="${HOME}/.dotfilez"
+DOTFILES_REPO="git@github.com:rrichardsonv/dotfilez.git"
+
+if [[ ! -d ${DOTFILES_ROOT} ]]; then
+  echo "Cloning repo"
+  git clone ${DOTFILES_REPO} ${DOTFILES_ROOT}
+fi
 
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"

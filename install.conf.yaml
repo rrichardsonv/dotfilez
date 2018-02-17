@@ -7,6 +7,9 @@
 
 - shell:
   - [xcode-select --install, Installing xcode tools]
+  - [mkdir -p ~/Repositories, Creating Repository directory]
+  - [mkdir -p ~/.raccoon_files/Screenshots, Creating Screenshots directory]
+  - [mkdir -p ~/.raccoon_files/MEMES, Creating MEMES directory]
   - [git submodule update --init --recursive, Installing submodules]
 
 - link:
@@ -23,5 +26,4 @@
     # node
     ~/.nodenv: nodenv
     ~/.nodenv/plugins/node-build: node-build
-    ~/.nodenv/plugins/nodenv-aliases: nodenv-aliases
     ~/.nodenv/plugins/nodenv-update: nodenv-update

@@ -6,15 +6,12 @@
 sudo chmod 000 /Applications/Mail.app/Contents/MacOS/Mail
 
 # Send screenshots to folder
-mkdir "${HOME}/Screenshots" && defaults write com.apple.screencapture location "${HOME}/Screenshots"
+defaults write com.apple.screencapture location "${HOME}/.raccoon_files/Screenshots"
 
 #----------------------------------------
 
 
 # From https://github.com/brousalis/dotfiles/blob/master/script/osx
-
-# Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
 
 # Always show scrollbars
 defaults write NSGlobalDomain AppleShowScrollBars -string "Always"

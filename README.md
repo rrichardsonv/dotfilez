@@ -6,6 +6,21 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 
 *****
 
+### Setup
+
+**[Download Latest Iterm2](https://www.iterm2.com/downloads.html)**
+
+*****
+
+1. curl from home directory
+2. `$.scripts/osx`
+3. `$.scripts/brew`
+4. `$.scripts/create-alias .raccoon_files/Screenshots`
+5. `$.scripts/create-alias .raccoon_files/MEMES`
+6. Set iterm color scheme (found at `~/.dotfilez/custom.itermcolors`)
+
+
+
 ### OS X apps [OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)
 
 <details>

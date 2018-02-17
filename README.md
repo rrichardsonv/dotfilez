@@ -24,7 +24,7 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 ### OS X apps [OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)
 
 <details>
-  <summary> Included </summary>
+  <summary> Deetz </summary>
 
 - [Google Chrome](https://www.google.com/chrome/)
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
@@ -41,13 +41,13 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 ### Chrome Extensions [OneTab - all](https://www.one-tab.com/page/AKj-51vRSb-pjkisvOpQfg)
 
 <details>
-  <summary> Included </summary>
+  <summary> Deetz </summary>
 
-### Utility
+**Utility**
 - [OneTab](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall?hl=en)
 - [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
 
-### Dev
+**Dev**
 - [React Dev tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 
 - [Redux Dev tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)

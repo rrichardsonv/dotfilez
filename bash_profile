@@ -28,7 +28,7 @@ done
 
 unset file
 
-sourcer ~/dotfilez/personal
+sourcer ~/.dotfilez/personal
 
 verbose_sourcer ~/.bashrc
 
@@ -38,4 +38,4 @@ if [[ $platform = 'darwin' ]]; then
 fi
 
 #rbenv
-eval "$(rbenv init -)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

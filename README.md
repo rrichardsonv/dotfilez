@@ -21,10 +21,12 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 
 
 
-### OS X apps [OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)
+### OS X apps 
+_[OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)_
 
 <details>
   <summary> Deetz </summary>
+<hr>
 
 - [Google Chrome](https://www.google.com/chrome/)
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
@@ -38,10 +40,12 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 </details>
 
 
-### Chrome Extensions [OneTab - all](https://www.one-tab.com/page/AKj-51vRSb-pjkisvOpQfg)
+### Chrome Extensions
+_[OneTab - all](https://www.one-tab.com/page/AKj-51vRSb-pjkisvOpQfg)_
 
 <details>
   <summary> Deetz </summary>
+<hr>
 
 **Utility**
 - [OneTab](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall?hl=en)

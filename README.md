@@ -1,10 +1,12 @@
-### Dotfilez
+## Dotfilez
 
 `bash -c "$(curl -fsSL raw.github.com/rrichardsonv/dotfilez/master/install)"`
 
 Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/blob/master/install
 
-#### mac apps [OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)
+*****
+
+### OS X apps [OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)
 
 <details>
   <summary> Included </summary>
@@ -21,7 +23,7 @@ Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/b
 </details>
 
 
-## Chrome Extensions [OneTab - all](https://www.one-tab.com/page/AKj-51vRSb-pjkisvOpQfg)
+### Chrome Extensions [OneTab - all](https://www.one-tab.com/page/AKj-51vRSb-pjkisvOpQfg)
 
 <details>
   <summary> Included </summary>

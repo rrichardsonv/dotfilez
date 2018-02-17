@@ -5,10 +5,10 @@
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Spotify](https://www.spotify.com/us/download/mac/)
 - [Spectacle](https://www.spectacleapp.com/)
-- [Alfred] (https://www.alfredapp.com/)
-- [VSCode] (https://code.visualstudio.com/docs/?dv=osx)
-- [Gestimer] (https://itunes.apple.com/us/app/gestimer/id990588172)
-- [Slack] (https://slack.com/downloads/osx)
+- [Alfred](https://www.alfredapp.com/)
+- [VSCode](https://code.visualstudio.com/docs/?dv=osx)
+- [Gestimer](https://itunes.apple.com/us/app/gestimer/id990588172)
+- [Slack](https://slack.com/downloads/osx)
 
 ## Security
 - [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)

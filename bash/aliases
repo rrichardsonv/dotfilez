@@ -1,0 +1,55 @@
+# combination of:
+# bash_aliases - part of the 4U6U57/dotfiles project
+# bash/aliases - part of ywong19/dotfiles
+
+# Define shortcuts for commonly used commands here
+
+# moving up in folders;
+function u() { NUM=${1:-1}; for (( start = 1; start <= $NUM; start++ )); do cd ..; done; }
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# readline settings
+bind "set completion-ignore-case on" 
+bind "set bell-style none" 
+bind "set show-all-if-ambiguous On"
+
+alias reload="source ~/.bashrc"
+alias untar="tar -xvvf"
+alias dsremove="find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch"
+
+
+#git
+alias commmit='commit'
+alias gbranches='git branch --column'
+alias undopush='git push -f origin HEAD^:master'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+function gco {
+  if [ $# -eq 0 ]; then
+    git checkout master
+  else
+    git checkout "$@"
+  fi
+}
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+  if test -r ~/.dircolors; then
+    eval "$(dircolors -b ~/.dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
+  alias ls="ls -Gh"
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+alias be='bundle exec'
+alias ber='bundle exec rails'
+alias berspec='bundle exec rspec'
+
+# fucking postgres
+alias pgfuck='pg_ctl -D /usr/local/var/postgres/ -l logfile stop -m fast;pg_ctl -D /usr/local/var/postgres/ -l logfile start;sleep 2;pg_ctl -D /usr/local/var/postgres/ -l logfile status'

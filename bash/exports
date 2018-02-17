@@ -1,0 +1,8 @@
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd
+
+export PATH=/usr/lib:~/bin:/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin

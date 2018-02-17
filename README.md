@@ -1,6 +1,6 @@
 ### Dotfilez
 
-`bash -c "$(curl -fsSL raw.github.com/rrichardsonv/dotfiles/master/install)"`
+`bash -c "$(curl -fsSL raw.github.com/rrichardsonv/dotfilez/master/install)"`
 
 Always read a script before you curl: https://github.com/rrichardsonv/dotfilez/blob/master/install
 

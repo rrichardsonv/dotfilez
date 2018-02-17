@@ -3,27 +3,34 @@
 #  - 4U6U57/dotfiles project
 #  - brousalis/dotfiles
 
-# auto-jump
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
 sourcer() {
   # sources files that actually exist
   # shellcheck disable=SC1090
-  [[ -r "$1" ]] && [[ -f "$1" ]] && source "$1"
+  if [[ -r "$1" ]] && [[ -f "$1" ]] && source "$1"
 }
 
 export -f sourcer
 
+verbose_sourcer() {
+  if [[ -r "$1" ]] && [[ -f "$1" ]]; then
+    source "$1"
+  else
+    echo "¯\_(ツ)_/¯"
+  fi
+}
+
+export -f verbose_sourcer
+
 # load files
-for file in ~/dotfiles/bash/{bash_prompt,exports,functions,aliases}; do
-  sourcer "$file"
+for file in ~/.dotfilez/bash/{bash_prompt,exports,functions,aliases}; do
+  verbose_sourcer "$file"
 done
 
 unset file
 
-sourcer ~/dotfiles/personal
+sourcer ~/dotfilez/personal
 
-sourcer ~/.bashrc
+verbose_sourcer ~/.bashrc
 
 # fix font smoothing on macs
 if [[ $platform = 'darwin' ]]; then

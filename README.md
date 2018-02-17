@@ -1,7 +1,8 @@
 ### Dotfilez
 
 #### mac apps
-
+- [Google Chrome](https://www.google.com/chrome/)
+- [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Spotify](https://www.spotify.com/us/download/mac/)
 - [Spectacle](https://www.spectacleapp.com/)
 - [Alfred] (https://www.alfredapp.com/)

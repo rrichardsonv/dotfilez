@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Make sure we’re using the latest Homebrew.
+brew update
+
+# Upgrade any already-installed formulae.
+brew upgrade
+
+# Install GNU core utilities (those that come with macOS are outdated).
+brew install coreutils
+
+# Install some other useful utilities like `sponge`.
+brew install moreutils
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
+brew install findutils
+# Install GNU `sed`, overwriting the built-in `sed`.
+brew install gnu-sed --with-default-names
+
+brew tap homebrew/versions
+brew install bash-completion2
+
+# Install `wget` with IRI support.
+brew install wget --with-iri
+
+# Install font tools.
+brew tap bramstein/webfonttools
+brew install sfnt2woff
+brew install sfnt2woff-zopfli
+brew install woff2
+
+# Install other useful binaries.
+brew install autojump
+brew install ack
+brew install git
+
+# Install rbenv
+brew install rbenv
+
+# Install deployment tools
+brew install awscli
+brew install heroku
+
+# Remove outdated versions from the cellar.
+brew cleanup

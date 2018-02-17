@@ -1,0 +1,12 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "node-build"]
+	path = node-build
+	url = https://github.com/nodenv/node-build.git
+[submodule "nodenv-update"]
+	path = nodenv-update
+	url = https://github.com/nodenv/nodenv-update.git
+[submodule "nodenv"]
+	path = nodenv
+	url = https://github.com/nodenv/nodenv.git

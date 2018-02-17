@@ -1,0 +1,27 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- shell:
+  - [xcode-select --install, Installing xcode tools]
+  - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    ~/.scripts: scripts
+    ~/.vimrc: vimrc
+    ~/.bashrc: bashrc
+    ~/.bash_profile: bash_profile
+    ~/.gemrc: gemrc
+    ~/.irbrc: irbrc
+    ~/.inputrc: inputrc
+    ~/.gitconfig: gitconfig
+    ~/.rspec: rspec
+
+    # node
+    ~/.nodenv: nodenv
+    ~/.nodenv/plugins/node-build: node-build
+    ~/.nodenv/plugins/nodenv-aliases: nodenv-aliases
+    ~/.nodenv/plugins/nodenv-update: nodenv-update

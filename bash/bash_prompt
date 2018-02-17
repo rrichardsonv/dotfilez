@@ -1,4 +1,4 @@
-# bashrc: part of ywong19/dotfiles
+# bashrc: modified slightly from ywong19/dotfiles
 # Terminal styling
 
 txtblk='\e[0;30m' # Black - Regular

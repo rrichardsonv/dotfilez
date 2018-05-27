@@ -3,7 +3,7 @@
 #----------------------------------------
 
 # Put default mail app on lockdown
-sudo chmod 000 /Applications/Mail.app/Contents/MacOS/Mail
+# sudo chmod 000 /Applications/Mail.app/Contents/MacOS/Mail
 
 # Send screenshots to folder
 defaults write com.apple.screencapture location "${HOME}/.raccoon_files/Screenshots"

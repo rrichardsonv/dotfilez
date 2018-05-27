@@ -2,9 +2,10 @@ export HISTCONTROL=ignoredups
 export HISTSIZE=10000
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd
+export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 
 export RBENVBIN="$HOME/.rbenv/bin"
 export NODENVBIN="$HOME/.nodenv/bin"
 
 export PATH=$RBENVBIN:$NODENVBIN:$PATH
+

@@ -53,3 +53,7 @@ alias berspec='bundle exec rspec'
 
 # fucking postgres
 alias pgfuck='pg_ctl -D /usr/local/var/postgres/ -l logfile stop -m fast;pg_ctl -D /usr/local/var/postgres/ -l logfile start;sleep 2;pg_ctl -D /usr/local/var/postgres/ -l logfile status'
+
+# fucking npm
+alias npmfuck='rm -rf node_modules/ && rm package-lock.json && npm cache clear --force && npm i'
+

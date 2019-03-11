@@ -29,7 +29,7 @@ done
 unset file
 
 sourcer ~/.dotfilez/personal
-
+# something
 verbose_sourcer ~/.bashrc
 
 # fix font smoothing on macs

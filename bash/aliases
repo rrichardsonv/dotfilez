@@ -21,6 +21,7 @@ alias dsremove="find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatc
 
 
 #git
+alias github=$'open `git config --get remote.origin.url | awk -F: \'{ print "https://github.com/"$2}\'`'
 alias commmit='commit'
 alias gbranches='git branch --column'
 alias undopush='git push -f origin HEAD^:master'

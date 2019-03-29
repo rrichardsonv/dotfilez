@@ -8,4 +8,4 @@ export RBENVBIN="$HOME/.rbenv/bin"
 export NODENVBIN="$HOME/.nodenv/bin"
 
 export PATH=$RBENVBIN:$NODENVBIN:$PATH
-
+export ERL_AFLAGS="-kernel shell_history enabled"

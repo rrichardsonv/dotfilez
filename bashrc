@@ -5,6 +5,7 @@ sourcer() {
   [[ -r "$1" ]] && [[ -f "$1" ]] && source "$1"
 }
 
+
 export -f sourcer
 
 sourcer ~/.profile

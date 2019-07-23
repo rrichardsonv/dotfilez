@@ -58,3 +58,8 @@ alias pgfuck='pg_ctl -D /usr/local/var/postgres/ -l logfile stop -m fast;pg_ctl 
 # fucking npm
 alias npmfuck='rm -rf node_modules/ && rm package-lock.json && npm cache clear --force && npm i'
 
+# fucking ecto
+alias ectofuck='mix ecto.drop && mix ecto.create && mix ecto.migrate'
+
+# fucking phx
+alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix ecto.drop && mix test'

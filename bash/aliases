@@ -6,13 +6,14 @@
 
 # moving up in folders;
 function u() { NUM=${1:-1}; for (( start = 1; start <= $NUM; start++ )); do cd ..; done; }
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # readline settings
-bind "set completion-ignore-case on" 
-bind "set bell-style none" 
+bind "set completion-ignore-case on"
+bind "set bell-style none"
 bind "set show-all-if-ambiguous On"
 
 alias reload="source ~/.bashrc"
@@ -63,3 +64,10 @@ alias ectofuck='mix ecto.drop && mix ecto.create && mix ecto.migrate'
 
 # fucking phx
 alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix ecto.drop && mix test'
+
+# fucking beam
+alias beamfuck='lsof -t -c beam.smp -a -i :4020,4000,4030 | xargs kill'
+
+
+alias cars_web.server="beamfuck;mix cmd --app cars_web 'mix phx.server'"
+alias admin_web.server="beamfuck;mix cmd --app admin_web 'mix phx.server'"

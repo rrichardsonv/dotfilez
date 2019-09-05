@@ -40,4 +40,4 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 [core]
-	excludesfile = ~/dotfilez/.gitignore_global
+	excludesfile = /Users/robertrichardson/.gitignore_global

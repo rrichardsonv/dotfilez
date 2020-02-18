@@ -37,9 +37,6 @@ if [[ $platform = 'darwin' ]]; then
   defaults -currentHost write -g AppleFontSmoothing -int 2
 fi
 
-#rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-#nodenv
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
-
+# asdf version management
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

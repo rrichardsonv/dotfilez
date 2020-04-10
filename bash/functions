@@ -69,7 +69,7 @@ function g_mv_lt(){
   local action="mv" rm_seg='' app_seg='' src=''
   local rpre="\033[0m\033[0;31m" gpre="\033[0m\033[0;32m" cpre="\033[0m\033[0;36m"
   local ipre="[ \033[00;34m..\033[0m ]" rst="\033[0m"
-  
+
   if [ $# -eq 0 ]
   then
     action="help"
@@ -116,7 +116,7 @@ function g_mv_lt(){
       echo "    --dry                    prints planned move for given args";
       echo "    --help                   displays this message";
       ;;
-    
+
     dry)
       printf "${ipre} The command given will make the following changes\n";
       echo '';

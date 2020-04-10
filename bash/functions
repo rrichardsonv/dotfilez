@@ -63,3 +63,87 @@ tell application "Notes"
 end tell
 EOF
 }
+
+# git mv files and associated test
+function g_mv_lt(){
+  local action="mv" rm_seg='' app_seg='' src=''
+  local rpre="\033[0m\033[0;31m" gpre="\033[0m\033[0;32m" cpre="\033[0m\033[0;36m"
+  local ipre="[ \033[00;34m..\033[0m ]" rst="\033[0m"
+  
+  if [ $# -eq 0 ]
+  then
+    action="help"
+  fi;
+
+  args=("$@")
+
+  for ((i=0; i < $#; i++))
+  do
+    local arg="${args[$i]}"
+    case $arg in
+      --help)
+        action="help"
+        ;;
+      --dry)
+        action="dry"
+        ;;
+      +*)
+        app_seg=$(echo $arg | sed -E 's/\/*$//' | sed -E 's/^\+/\//' | sed -e 's/\//\\\//g')
+        ;;
+      -*)
+        rm_seg=$(echo $arg | sed -E 's/-//' | sed -E 's/\/*$//' | sed -e 's/\//\\\//g')
+        ;;
+      *)
+        src="$arg"
+        ;;
+    esac
+  done;
+
+  local base_src=$(basename $src)
+  local app_seg_pattern="s/\/$base_src/$app_seg\/$base_src/"
+  local rm_seg_pattern="s/$rm_seg\///"
+  local dst=$(echo $src | sed -E "$rm_seg_pattern" | sed -E "$app_seg_pattern");
+  local tst_src=$(echo $src | sed -E 's/lib/test/' | sed -E 's/.ex/_test.exs/');
+  local tst_dst=$(echo $dst | sed -E 's/lib/test/' | sed -E 's/.ex/_test.exs/');
+  echo '';
+  case $action in
+    help)
+      echo "usage: g_mv_lt [<options>] <source>";
+      printf "example: ${cpre}g_mv_lt --dry -foo/bar +quux apps/baz/lib/foo/bar/quux.ex${rst}\n"
+      echo '';
+      printf "    -${rpre}<path/to/remove>${rst}        removes path/to/remove from source\n";
+      printf "    +${gpre}<path/to/append>${rst}        appends path/to/append to source\n";
+      echo "    --dry                    prints planned move for given args";
+      echo "    --help                   displays this message";
+      ;;
+    
+    dry)
+      printf "${ipre} The command given will make the following changes\n";
+      echo '';
+      if [ ! -z "$rm_seg" ]
+      then
+        printf "${rpre} remove${rst} $(echo $rm_seg | sed -E 's/\\\//\//g')\n";
+      fi;
+
+      if [ ! -z "$app_seg" ]
+      then
+        printf "${gpre} append${rst} $(echo $app_seg | sed -E 's/\\\//\//g')\n";
+      fi;
+      echo ''
+      printf "${ipre} This will perform the following move\n";
+      echo "$src -> $dst";
+      echo "$tst_src -> $tst_dst";
+      ;;
+
+    mv)
+      echo "${ipre} Executing git mv";
+      echo "$src -> $dst";
+      git mv $src $dst;
+      echo '';
+      echo "$tst_src -> $tst_dst";
+      git mv $tst_src $tst_dst;
+      ;;
+  esac;
+  echo '';
+  printf "\n[${gpre}done${rst}]\n";
+}

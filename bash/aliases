@@ -71,12 +71,9 @@ alias beamfuck='lsof -t -c beam.smp -a -i :4020,4010,4000,4030 | xargs kill'
 
 # god dang git
 function goddangit () {
-    if [ -z "$(git status --porcelain)" ]; then
-    OG_BRANCH=$(branch_name)
-    git checkout master
-    git pull
-    git checkout $OG_BRANCH
-    git rebase master
+  if [ -z "$(git status --porcelain)" ]; then
+      OG_BRANCH=$(branch_name)
+      git pull --rebase origin master
     if [ -z "$(git status --porcelain)" ]; then 
       git push origin $OG_BRANCH --no-verify --force-with-lease
     else

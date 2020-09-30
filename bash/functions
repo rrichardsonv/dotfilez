@@ -147,3 +147,22 @@ function g_mv_lt(){
   echo '';
   printf "\n[${gpre}done${rst}]\n";
 }
+
+function tail_impressions(){
+  local imp_file="./apps/kafka_repo/priv/kafka_local/$1.json"
+
+  rm $imp_file && echo "Removing $imp_file"
+
+  touch -a $imp_file && echo "Creating new $imp_file"
+
+  echo "Tailing logs..."
+  echo ""
+  tail -f $imp_file | sed -e $'
+    s/[{}]/\\\n/g
+    s/,"/\\\033[39m\\\033[0m\\\n\"/g;
+    s/\\n"/\\\n\\\033[32m\"/g;
+    s/":/"\\\033[39m:/g;
+    s/:null/\\\033[35m:null\\\033[0m/g;
+    s/:"/:\\\033[33;1m"/g
+  '
+}

@@ -89,4 +89,5 @@ function goddangit () {
 
 alias cars_web.server="beamfuck;mix cmd --app cars_web 'mix phx.server'"
 alias admin_web.server="beamfuck;mix cmd --app admin_web 'mix phx.server'"
+alias cars_api.server="beamfuck;mix cmd --app cars_api 'mix phx.server'"
 alias dealer_web.server="beamfuck;mix cmd --app dealer_web 'mix phx.server'"

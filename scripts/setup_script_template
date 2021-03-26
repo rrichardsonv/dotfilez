@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ENV_FILE=assets/.env
+
+function green_txt(){
+  echo "<clr>🛁 - $1<rst>" | sed -e $'s/<clr>/\\\033[32m/g;s/<rst>/\\\033[0m/g'
+}
+
+function print_tub(){
+cat <<'EOF'
+          o    .   _     .
+            .     (_)       o
+    o      ____  \033[93m'.\033[0m \033[32m_\033[0m \033[93m.'\033[0m     o  _
+   _     /     )\033[93m-=\033[0m \033[32m(~)\033[0m \033[93m=-\033[0m  .  o(_)   .
+  (_)    \    ə( \033[93m.'\033[0m \033[32m#\033[0m \033[93m'.\033[0m          _
+  o       \   _/   ,_ , o   o    (_)
+    . O   _/ (_   / _/      .  ,        o
+      o8o/    |\_/ / ,-.  ,oO8/( -TT
+      o8o8O|  |   / /   \Oo8OOo8Oo||     O
+    Oo(\033[1;34m""\033[0mo8\033[1;34m"""""""""""""""\033[0m8oo\033[1;34m"""""""\033[0m)
+    _   `\`'                  `'   /'   o
+  (_)     \                       /    _   .
+        O  \           _         /    (_)
+  o   .     `-. .----<(o)_--. .-'
+    --------(_/------(_<_/--\_)--------
+
+EOF
+}
+
+if [ -f "$ENV_FILE" ]; then
+  green_txt "Already have $ENV_FILE... skipping"
+else
+  green_txt 'Paste your FOO_TOKEN (req)'
+
+  read foo_token
+
+  tok_pat="s/FOO_TOKEN=/FOO_TOKEN=$foo_token/g"
+
+  green_txt "Creating $ENV_FILE file with entered values useing $ENV_FILE.sample"
+
+  sed -e $tok_pat "$ENV_FILE.sample" > assets/.env
+fi
+
+green_txt 'Installing node dependencies...'
+mix cmd npm install --prefix assets
+
+echo -e "$(print_tub)"
+green_txt "Eureka! You've done it"

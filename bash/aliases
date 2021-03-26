@@ -67,27 +67,10 @@ alias ectofuck='mix ecto.drop && mix ecto.create && mix ecto.migrate'
 alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix ecto.drop && mix test'
 
 # fucking beam
-alias beamfuck='lsof -t -c beam.smp -a -i :4020,4010,4000,4030 | xargs kill'
-
-# god dang git
-function goddangit () {
-  if [ -z "$(git status --porcelain)" ]; then
-      OG_BRANCH=$(branch_name)
-      git pull --rebase origin master
-    if [ -z "$(git status --porcelain)" ]; then 
-      git push origin $OG_BRANCH --no-verify --force-with-lease
-    else
-      echo "Resolve your conflicts and run:"
-      echo "------------------------------------------"
-      echo git push origin $OG_BRANCH --no-verify --force-with-lease
-      echo "------------------------------------------"
-    fi
-  else
-    echo "Sort out your mess first"
-  fi
-}
+alias beamfuck='lsof -t -c beam.smp -a -i :"$(seq -s , 4000 +10 4090)" | xargs kill'
 
 alias cars_web.server="beamfuck;mix cmd --app cars_web 'mix phx.server'"
 alias admin_web.server="beamfuck;mix cmd --app admin_web 'mix phx.server'"
 alias cars_api.server="beamfuck;mix cmd --app cars_api 'mix phx.server'"
 alias dealer_web.server="beamfuck;mix cmd --app dealer_web 'mix phx.server'"
+alias phx.s="NO_OBAN=true iex -S mix phx.server"

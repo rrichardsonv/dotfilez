@@ -3,6 +3,89 @@ function md() {
   mkdir -p "$@" && cd "$@"
 }
 
+function kube_preview(){
+  PS3="$(tput setaf 0)$(tput setab 2)(Enter number of pod or 'Ctrl+C' to quit):$(tput sgr0)";
+
+  echo "$(tput setaf 0)$(tput setab 2)Getting pods...$(tput sgr0)";
+  pods="$(kubectl -o name --context non-prod get pods -n $1 | sed -E 's/pod\///g')";
+
+  echo "$(tput setaf 0)$(tput setab 2)Select the pod you'd like to connect to$(tput sgr0)";
+
+  select pod in $pods
+  do
+    case $pod in
+      * )
+        echo $pod | sed -E 's/preview-.{8}-cars-platform-/Connecting to /g;s/-.{10}-.{5}$/.../g';
+        echo '';
+        kubectl --context non-prod -n $1 exec -it $pod -- bash
+        ;;
+    esac
+  done
+}
+
+
+salt_the_earth () {
+  echo $(pwd)
+  echo -e "$(tput setaf 4)$(tput setab 2)Have you closed VSCode and are running this command in a terminal window?\n Input the corresponding number to continue. $(tput sgr0)"
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) broken_arrow; break;;
+          No ) echo "Bye Felicia"; break;;
+      esac
+  done
+}
+
+broken_arrow () {
+  echo "$(tput setaf 4)$(tput setab 2)Deleting deps _build and .elixir_ls$(tput sgr0)"
+  rm -rf deps _build .elixir_ls
+  echo "$(tput setaf 4)$(tput setab 2)Getting your deps$(tput sgr0)"
+  mix deps.get
+  echo "$(tput setaf 4)$(tput setab 2)Starting elastic search...$(tput sgr0)"
+  docker-compose up -d elasticsearch
+  echo "$(tput setaf 4)$(tput setab 2)Running script/setup...$(tput sgr0)"
+  # script/setup
+}
+
+function hand_turkey(){
+  fswatch -r --event=Updated ./_build | sed -e 's/\/Users\/robertrichardson\/Repositories\/compilation_tester\/_build\/dev\/lib\/compilation_tester\///g;s/\.mix.+//g;sbin\/Elixir\.//g;s/\.beam//g;'
+}
+
+function tail_multiple(){
+  osascript <<'EOF'
+  tell application "iTerm"
+      activate
+      select first window
+
+      # Create new tab
+      tell current window
+          create tab with default profile
+      end tell
+
+      # Split pane
+      tell current session of current window
+          split vertically with default profile
+          split vertically with default profile
+      end tell
+
+      # Exec commands
+      tell first session of current tab of current window
+          write text "cd ~/Repositories/cars_platform"
+          write text "tail_impressions \"beta-search\""
+      end tell
+
+      tell second session of current tab of current window
+          write text "cd ~/Repositories/cars_platform"
+          write text "tail_impressions \"beta-clicks\""
+      end tell
+
+      tell third session of current tab of current window
+          write text "cd ~/Repositories/cars_platform"
+          write text "tail_impressions \"beta-impressions\""
+      end tell
+    end tell
+  EOF
+}
+
 # Determine size of a file or total size of a directory
 function fs() {
   if du -b /dev/null > /dev/null 2>&1; then
@@ -148,6 +231,14 @@ function g_mv_lt(){
   printf "\n[${gpre}done${rst}]\n";
 }
 
+function quickgres() {
+  PGPASSWORD='postgres' psql -t \
+    -h localhost \
+    -U postgres \
+    -d engine_dev \
+    -c "$1"
+}
+
 function tail_impressions(){
   local imp_file="./apps/kafka_repo/priv/kafka_local/$1.json"
 
@@ -165,4 +256,78 @@ function tail_impressions(){
     s/:null/\\\033[35m:null\\\033[0m/g;
     s/:"/:\\\033[33;1m"/g
   '
+}
+
+
+function mult_cmd(){
+  function define(){ IFS='\n' read -r -d '' ${1} || true; }
+  args=("$@")
+
+  define screept <<'ENDSCREEPT'
+  on run(argv)
+    global termCmd
+    set termCmd to convertListToString(argv, space)
+    tell application "iTerm"
+      activate
+
+      # Create new tab
+      tell current window
+          create tab with default profile
+      end tell
+
+      # excute cmd
+      tell current session of current window
+          write text termCmd
+      end tell
+    end tell
+  end run
+
+  on convertListToString(theList, theDelimiter)
+    set AppleScript's text item delimiters to theDelimiter
+    set theString to theList as string
+    set AppleScript's text item delimiters to ""
+    return theString
+  end convertListToString
+ENDSCREEPT
+
+  for ((i=0; i < $#; i++))
+  do
+    local arg="${args[$i]}"
+    local dir="~/Repositories/cars_platform"
+    case $arg in
+      -cd=*)
+        dir=$(echo $arg | sed -E 's/-cd=//')
+        ;;
+      *)
+        osascript -e "$screept" "cd $dir " '&&' "$arg"
+        ;;
+    esac
+  done;
+}
+
+function underscore_branch(){
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* [^\/]*\/\(.*\)/\1/;s/-/_/g';
+}
+
+
+function ecto_mig(){
+  cp `ls apps/engine/priv/repo/migrations/ | tail -n 1 | sed -e 's/^/apps\/engine\/priv\/repo\/migrations\//'` "apps/engine/priv/repo/migrations/$(date +"%Y%m%d%H%M%S")_$(underscore_branch).exs"
+}
+
+# god dang git
+function goddangit () {
+  if [ -z "$(git status --porcelain)" ]; then
+      OG_BRANCH=$(branch_name)
+      git pull --rebase origin master
+    if [ -z "$(git status --porcelain)" ]; then 
+      git push origin $OG_BRANCH --no-verify --force-with-lease
+    else
+      echo "Resolve your conflicts and run:"
+      echo "------------------------------------------"
+      echo git push origin $OG_BRANCH --no-verify --force-with-lease
+      echo "------------------------------------------"
+    fi
+  else
+    echo "Sort out your mess first"
+  fi
 }

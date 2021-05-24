@@ -3,27 +3,6 @@ function md() {
   mkdir -p "$@" && cd "$@"
 }
 
-function kube_preview(){
-  PS3="$(tput setaf 0)$(tput setab 2)(Enter number of pod or 'Ctrl+C' to quit):$(tput sgr0)";
-
-  echo "$(tput setaf 0)$(tput setab 2)Getting pods...$(tput sgr0)";
-  pods="$(kubectl -o name --context non-prod get pods -n $1 | sed -E 's/pod\///g')";
-
-  echo "$(tput setaf 0)$(tput setab 2)Select the pod you'd like to connect to$(tput sgr0)";
-
-  select pod in $pods
-  do
-    case $pod in
-      * )
-        echo $pod | sed -E 's/preview-.{8}-cars-platform-/Connecting to /g;s/-.{10}-.{5}$/.../g';
-        echo '';
-        kubectl --context non-prod -n $1 exec -it $pod -- bash
-        ;;
-    esac
-  done
-}
-
-
 salt_the_earth () {
   echo $(pwd)
   echo -e "$(tput setaf 4)$(tput setab 2)Have you closed VSCode and are running this command in a terminal window?\n Input the corresponding number to continue. $(tput sgr0)"
@@ -83,7 +62,7 @@ function tail_multiple(){
           write text "tail_impressions \"beta-impressions\""
       end tell
     end tell
-  EOF
+EOF
 }
 
 # Determine size of a file or total size of a directory
@@ -239,25 +218,19 @@ function quickgres() {
     -c "$1"
 }
 
-function tail_impressions(){
+function tail_kafka(){
   local imp_file="./apps/kafka_repo/priv/kafka_local/$1.json"
-
-  rm $imp_file && echo "Removing $imp_file"
-
-  touch -a $imp_file && echo "Creating new $imp_file"
-
-  echo "Tailing logs..."
+  if [ $# -eq 2 ]; then
+    echo "Pulling out $2 values from tail..."
+    local jq_pattern="{key: .key, payload: (.payload | fromjson | to_entries | map(select(.key | test(\"$2\") ) ) | from_entries)}"
+  else
+    local jq_pattern="{key: .key, payload: (.payload | fromjson | .)}"
+  fi
+  rm $imp_file
+  touch -a $imp_file
   echo ""
-  tail -f $imp_file | sed -e $'
-    s/[{}]/\\\n/g
-    s/,"/\\\033[39m\\\033[0m\\\n\"/g;
-    s/\\n"/\\\n\\\033[32m\"/g;
-    s/":/"\\\033[39m:/g;
-    s/:null/\\\033[35m:null\\\033[0m/g;
-    s/:"/:\\\033[33;1m"/g
-  '
+  tail -f $imp_file | jq --sort-keys "$jq_pattern"
 }
-
 
 function mult_cmd(){
   function define(){ IFS='\n' read -r -d '' ${1} || true; }
@@ -316,18 +289,43 @@ function ecto_mig(){
 
 # god dang git
 function goddangit () {
+  local r="\360\237\244\226";
+  local s="\342\234\205";
+  local f="\342\233\224\357\270\217";
+  local d="\360\237\221\213";
+  printf " $r - Running rebase and push utility...\n"
+  printf " $r - Checking working directory...\n"
   if [ -z "$(git status --porcelain)" ]; then
       OG_BRANCH=$(branch_name)
-      git pull --rebase origin master
-    if [ -z "$(git status --porcelain)" ]; then 
-      git push origin $OG_BRANCH --no-verify --force-with-lease
+      ROOT_BRANCH=$(git remote show origin | grep 'HEAD branch' | sed 's/.*HEAD branch: //')
+      printf " $s - Working directory clean.\n"
+      echo "------------------------------------------"
+      printf " $r - Rebasing onto latest origin/$ROOT_BRANCH...\n"
+      git pull --rebase origin $ROOT_BRANCH
+    if [ -z "$(git status --porcelain)" ]; then
+      printf " $s - Rebase successful.\n"
+      echo "------------------------------------------"
+      printf " $r - Force pushing to update branch...\n"
+      
+      if ! git push origin $OG_BRANCH --no-verify --force-with-lease;
+      then
+        printf " $f - Push failed there may be additional output above\n"
+        echo "------------------------------------------"
+      else
+        printf " $s - Push sucessful.\n"
+        echo "------------------------------------------"
+      fi
     else
-      echo "Resolve your conflicts and run:"
+      printf " $f - Not an easy rebase. Resolve your conflicts and run:\n"
       echo "------------------------------------------"
       echo git push origin $OG_BRANCH --no-verify --force-with-lease
       echo "------------------------------------------"
     fi
   else
-    echo "Sort out your mess first"
+    printf " $f - Cannot rebase when there are uncommited changes...\n"
+    echo "------------------------------------------"
+    echo "Sort out your mess first."
   fi
+
+  printf " $d - Done.\n"
 }

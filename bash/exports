@@ -4,10 +4,15 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
 export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 
-export RBENVBIN="$HOME/.rbenv/bin"
-export NODENVBIN="$HOME/.nodenv/bin"
+# export RBENVBIN="$HOME/.rbenv/bin"
+# export NODENVBIN="$HOME/.nodenv/bin"
 export PYTHON3PKG="$HOME/.asdf/installs/python/3.8.1/lib/python3.8/site-packages"
 export NO_OBAN=true
 
-export PATH=$RBENVBIN:$NODENVBIN:$PYTHON3PKG:$PATH
+export PATH=$PYTHON3PKG:$PATH
 export ERL_AFLAGS="-kernel shell_history enabled"
+export JAVAC_PATH="/usr/bin/javac"
+export WX_CONFIG_PATH="/usr/local/bin/wx-config"
+export ERLANG_OPENSSL_PATH="/usr/local/opt/openssl" 
+export KERL_CONFIGURE_OPTIONS="--with-ssl=/usr/local/opt/openssl --without-javac"
+

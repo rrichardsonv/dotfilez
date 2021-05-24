@@ -69,6 +69,8 @@ alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix e
 # fucking beam
 alias beamfuck='lsof -t -c beam.smp -a -i :"$(seq -s , 4000 +10 4090)" | xargs kill'
 
+alias gslurp='git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'
+
 alias cars_web.server="beamfuck;mix cmd --app cars_web 'mix phx.server'"
 alias admin_web.server="beamfuck;mix cmd --app admin_web 'mix phx.server'"
 alias cars_api.server="beamfuck;mix cmd --app cars_api 'mix phx.server'"

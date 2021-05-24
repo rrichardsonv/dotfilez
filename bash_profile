@@ -42,3 +42,4 @@ fi
 . $HOME/.asdf/completions/asdf.bash
 export PATH=~/.local/bin:$PATH
 export AWS_SDK_LOAD_CONFIG=1
+. "$HOME/.cargo/env"

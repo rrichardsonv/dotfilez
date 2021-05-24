@@ -6,15 +6,10 @@
 - clean: ["~"]
 
 - shell:
-    - [xcode-select --install, Installing xcode tools]
     - [mkdir -p ~/Repositories, Creating Repository directory]
     - [mkdir -p ~/.raccoon_files/Screenshots, Creating Screenshots directory]
     - [mkdir -p ~/.raccoon_files/MEMES, Creating MEMES directory]
     - [git submodule update --init --recursive, Installing submodules]
-    - [
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)",
-        Installing brew,
-      ]
     - [brew doctor, doing doctor]
     - [brew update, doing update]
     - [

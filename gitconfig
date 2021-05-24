@@ -41,3 +41,5 @@
 	smudge = git media smudge %f
 [core]
 	excludesfile = /Users/robertrichardson/.gitignore_global
+[pull]
+	ff = only

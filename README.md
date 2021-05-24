@@ -40,7 +40,7 @@ _[OneTab - all](https://www.one-tab.com/page/looveuo2RbSFNAS9y6fSWA)_
 - [Slack](https://slack.com/downloads/osx)
 - [GIMP](https://www.gimp.org/downloads/)
 - [1Password](https://my.1password.com/signin/)
-
+- [Postman] (https://www.postman.com/downloads/)
 </details>
 
 

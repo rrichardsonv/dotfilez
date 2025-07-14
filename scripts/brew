@@ -21,25 +21,27 @@ brew install gnu-sed --with-default-names
 brew tap homebrew/versions
 brew install bash-completion2
 
+brew install direnv
+
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
 # Install font tools.
-brew tap bramstein/webfonttools
-brew install sfnt2woff
-brew install sfnt2woff-zopfli
-brew install woff2
+# brew tap bramstein/webfonttools
+# brew install sfnt2woff
+# brew install sfnt2woff-zopfli
+# brew install woff2
 
 # Install other useful binaries.
-brew install autojump
-brew install ack
+# brew install autojump
+# brew install ack
 
 # Install rbenv
-brew install rbenv
+# brew install rbenv
 
 # Install deployment tools
-brew install awscli
-brew install heroku
+# brew install awscli
+# brew install heroku
 
 # Remove outdated versions from the cellar.
 brew cleanup

@@ -38,8 +38,9 @@ if [[ $platform = 'darwin' ]]; then
 fi
 
 # asdf version management
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+# . $HOME/.asdf/asdf.sh
+# . $HOME/.asdf/completions/asdf.bash
 export PATH=~/.local/bin:$PATH
+export PATH="$HOME/.rbenv/shims:$PATH"
 export AWS_SDK_LOAD_CONFIG=1
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"

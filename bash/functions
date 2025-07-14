@@ -1,13 +1,148 @@
+# Function to get last N commands from bash history, insert them in a template, and copy to clipboard
+# Usage: hist_to_template N
+function hist_to_template() {
+    # Check if an argument is provided
+    if [ $# -ne 1 ] || ! [[ "$1" =~ ^[0-9]+$ ]]; then
+        echo "Usage: hist_to_template N (where N is a positive integer)"
+        return 1
+    fi
+
+    local num_commands="$1"
+    
+    # Get the last N commands from history, excluding this function call and related commands
+    local history_commands=$(history | grep -v "hist_to_template" | tail -n "$num_commands" | awk '{$1=""; print substr($0,2)}')
+    
+    if [ -z "$history_commands" ]; then
+        echo "No commands found in history or filter removed all commands"
+        return 1
+    fi
+    
+    local template;
+
+    # Create the template with the commands
+    read -r -d '' template <<EOF
+create a bash function that performs the following commands
+\`\`\`
+$history_commands
+\`\`\`
+If you're aware of a more efficient way to perform one of the commands use that instead but comment above that replaced line with the original command
+EOF;
+
+# Copy to clipboard using pbcopy (macOS)
+if command -v pbcopy > /dev/null; then
+    echo "$template" | pbcopy
+    echo "Template with last $num_commands commands copied to clipboard!"
+else
+    echo "Error: pbcopy command not found. Are you running on macOS?"
+    echo "Here's your template:"
+    echo "$template"
+    return 1
+fi
+
+return 0;
+}
+
+# Function to replace lines in a file with a given string
+# Usage: replace_lines "replacement text" file_path start_line [end_line]
+function replace_lines() {
+    # Check if required arguments are provided
+    if [ $# -lt 3 ]; then
+        echo "Usage: replace_lines \"replacement text\" file_path start_line [end_line]"
+        return 1
+    fi
+
+    local replacement_text="$1"
+    local file_path="$2"
+    local start_line="$3"
+    local end_line="${4:-$start_line}"  # If end_line is not provided, use start_line
+    
+    # Check if file exists
+    if [ ! -f "$file_path" ]; then
+        echo "Error: File '$file_path' does not exist"
+        return 1
+    fi
+    
+    # Check if line numbers are valid
+    local file_length=$(wc -l < "$file_path")
+    if ! [[ "$start_line" =~ ^[0-9]+$ ]] || ! [[ "$end_line" =~ ^[0-9]+$ ]]; then
+        echo "Error: Line numbers must be integers"
+        return 1
+    fi
+    
+    if [ "$start_line" -le 0 ] || [ "$end_line" -le 0 ]; then
+        echo "Error: Line numbers must be positive integers"
+        return 1
+    fi
+    
+    if [ "$start_line" -gt "$file_length" ]; then
+        echo "Error: Start line ($start_line) exceeds file length ($file_length)"
+        return 1
+    fi
+    
+    if [ "$end_line" -lt "$start_line" ]; then
+        echo "Error: End line ($end_line) cannot be less than start line ($start_line)"
+        return 1
+    fi
+    
+    # Create a temporary file
+    local temp_file=$(mktemp)
+    
+    # Write the part before the replacement
+    if [ "$start_line" -gt 1 ]; then
+        head -n $((start_line - 1)) "$file_path" > "$temp_file"
+    else
+        # If replacing from the first line, create an empty temp file
+        > "$temp_file"
+    fi
+    
+    # Add the replacement text
+    echo "$replacement_text" >> "$temp_file"
+    
+    # Append the part after the replacement if needed
+    if [ "$end_line" -lt "$file_length" ]; then
+        tail -n $((file_length - end_line)) "$file_path" >> "$temp_file"
+    fi
+    
+    # Move the temporary file to the original location
+    mv "$temp_file" "$file_path"
+    
+    echo "Successfully replaced lines $start_line to $end_line in '$file_path'"
+    return 0
+}
+
+
 # Create a new directory and enter it
 function md() {
   mkdir -p "$@" && cd "$@"
 }
 
-server3 () {
+function cp_diff() {
+  echo "git apply --ignore-whitespace << 'EOF'" > ./tmp-patch;
+  git diff >> ./tmp-patch;
+  echo "EOF" >> ./tmp-patch;
+  pbcopy < ./tmp-patch;
+  rm ./tmp-patch;
+}
+
+function npmlonk () {
+  cd ../../../event-stream-client &&
+  npm run prepack && \
+  cd packages/client && \
+  npm link && \
+  cd ../../../cars_platform/apps/cars_web/assets && \
+  npm link @carsdotcom/event-stream-client && \
+  echo '-----------' && \
+  npm ls @carsdotcom/event-stream-client && \
+  echo '-----------' && \
+  cd .. && \
+  iex -S mix phx.server;
+}
+
+function server3 () {
   python3 -m http.server "${1:-8000}"
 }
 
-salt_the_earth () {
+function salt_the_earth () {
   echo $(pwd)
   echo -e "$(tput setaf 4)$(tput setab 2)Have you closed VSCode and are running this command in a terminal window?\n Input the corresponding number to continue. $(tput sgr0)"
   select yn in "Yes" "No"; do
@@ -18,7 +153,7 @@ salt_the_earth () {
   done
 }
 
-broken_arrow () {
+function broken_arrow () {
   echo "$(tput setaf 4)$(tput setab 2)Deleting deps _build and .elixir_ls$(tput sgr0)"
   rm -rf deps _build .elixir_ls
   echo "$(tput setaf 4)$(tput setab 2)Getting your deps$(tput sgr0)"
@@ -291,6 +426,50 @@ function ecto_mig(){
   cp `ls apps/engine/priv/repo/migrations/ | tail -n 1 | sed -e 's/^/apps\/engine\/priv\/repo\/migrations\//'` "apps/engine/priv/repo/migrations/$(date +"%Y%m%d%H%M%S")_$(underscore_branch).exs"
 }
 
+function quickPronk () {
+  local r="\360\237\244\226";
+  local s="\342\234\205";
+  local d="\360\237\221\213";
+
+  printf "$r - Trimming input file..."
+  echo "";
+  # clip your mp4 file
+  ffmpeg -ss 0 -i "$1" -t 15 -c copy ./trimmed_output.mp4
+
+  printf "$s - Success."
+  echo "";
+  printf "$r - Getting rickroll.mp3..."
+  echo "";
+  # get rickroll
+  curl --output rickroll.mp3 "https://www.myinstants.com/media/sounds/rick-rolled-meme-aetrim1602054550919.mp3"
+  printf "$s - Success."
+
+  # create tinysquare.page pixel
+  echo 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2Pg92n8DwADJgHcfHlTZAAAAABJRU5ErkJggg==' | base64 --decode > ./tinysquare.png
+
+  printf "$r - Preparing rickroll to prepend..."
+  echo "";
+  # convert rickroll to mp4, need image to trick codec
+  ffmpeg -loop 1 -i ./tinysquare.png -i ./rickroll.mp3 -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black,setsar=1,format=yuv420p" -shortest -fflags +shortest ./rickroll-vid.mp4
+
+  # strip video stream from rickroll
+  ffmpeg -i ./rickroll-vid.mp4 -vn -c:a copy ./rickroll-aud.mp4
+
+  printf "$r - It's time to prepend 🎶 🎵..."
+  echo "";
+  # concat the rickroll to the original trimmed audio file MAINTAINING ITS ORIGINAL METADATA
+  ffmpeg -i ./trimmed_output.mp4 -i ./rickroll-aud.mp4 -filter_complex "[0:a][1:a]concat=n=2:v=0:a=1[a]" -map "[a]" "$2"
+
+  printf "$s - Success.\a"
+  echo "";
+
+  printf "$d - Cleaning up then done"
+  echo "";
+  # clean up files
+  rm ./rickroll-vid.mp4 ./rickroll-aud.mp4 ./rickroll.mp3 ./trimmed_output.mp4 ./tinysquare.png
+}
+
+
 # god dang git
 function goddangit () {
   local r="\360\237\244\226";
@@ -332,4 +511,116 @@ function goddangit () {
   fi
 
   printf " $d - Done.\n"
+}
+
+function git_prefix_branch () {
+  local f="\342\233\224\357\270\217";
+  local r="\360\237\244\226";
+  local pat="/^[^*]/d;s/* /$1-/";
+  local bronch_nm=$(git branch 2> /dev/null | sed -e "$pat")
+
+  if [ -z "$(git status --porcelain)" ]; then
+    printf " $r - Switching to $1 branch...\n";
+    git co -b "$bronch_nm";
+  else
+    printf " $f - Clean up your mess you animal\n";
+  fi
+}
+
+
+function npm_esc_prerelease () {
+  local r="\360\237\244\226";
+  local s="\342\234\205";
+  local f="\342\233\224\357\270\217";
+  local d="\360\237\221\213";
+
+  printf " $r - Running npm prerelease utility...\n";
+  printf " $r - Changing dir to event-stream-client...\n";
+  cd ~/Repositories/event-stream-client;
+
+  printf " $r - Checking working directory...\n";
+  if [ -z "$(git status --porcelain)" ]; then
+    printf " $s - All good\n";
+
+    git_prefix_branch "prerelease"
+
+    printf " $r - Creating client prerelease version...\n";
+    cd packages/client
+    npm version prerelease
+    git add ../..
+    git commit -m "prerelease for preview - 0"
+    
+    printf " $r - Running publish...\n";
+    npm publish
+  else
+    printf " $f - Clean up your mess you animal\n";
+  fi
+}
+
+function npm_esc_preview () {
+  local r="\360\237\244\226";
+  local s="\342\234\205";
+  local f="\342\233\224\357\270\217";
+  local d="\360\237\221\213";
+
+
+  printf " $r - Changing dir to cars_web/assets...\n";
+  cd ~/Repositories/cars_platform/apps/cars_web/assets;
+
+  printf " $r - Checking working directory...\n";
+  if [ -z "$(git status --porcelain)" ]; then
+    printf " $s - All good\n";
+
+    git_prefix_branch "preview";
+
+    npm_bump "@carsdotcom/event-stream-client";
+
+    cd ../../..;
+
+    script/preview;
+  else
+    printf " $f - Clean up your mess you animal\n";
+  fi
+}
+
+# Bump an npm package deterministically
+function npm_bump () {
+  local r="\360\237\244\226";
+  local s="\342\234\205";
+  local f="\342\233\224\357\270\217";
+  local d="\360\237\221\213";
+  printf " $r - Running npm update utility...\n";
+  printf " $r - Checking working directory...\n";
+  if [ -z "$(git status --porcelain)" ]; then
+    printf " $s - All good\n";
+    
+    printf " $r - running npm uninstall $1...\n";
+    npm uninstall "$1";
+    
+    printf " $r - running npm install $1...\n";
+    npm install "$1";
+
+    printf " $r - adding and committing package-lock and package.json...\n";
+    git add ./package{,-lock}.json
+
+    local new_version=$(npm ls "$1" | sed -E 's/[^0-9]+//;s/^[[:space:]]*//g;/^[[:space:]]*$/d');
+
+    git commit -m "Bumps $1 to $new_version" --no-verify
+  else
+    printf " $f - Clean up your mess you animal\n";
+  fi
+}
+
+
+function flaker () {
+	RUNCOUNT=${1:-10};
+  local r="\360\237\244\226";
+  local d="\360\237\221\213";
+  printf " $r - Running flaker utility\n";
+	printf " $r - Set for ${RUNCOUNT} test runs...\n";
+  for ((i=0; i < $1; i++))
+  do
+    printf " $r - run number: $i\n";
+		mix test $2 || break
+  done;
 }

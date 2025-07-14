@@ -35,7 +35,7 @@
   hist = log --pretty=format:\"%Cgreen%h%Creset %Cblue%ad%Creset %s%C(yellow)%d%Creset %Cblue[%an]%Creset\" --graph --date=short
   praise = blame
   count = git shortlog -sn
-  put = !sh -c 'git push -u origin $(git rev-parse --abbrev-ref HEAD)'
+  put = !sh -c 'git push -u origin $(git rev-parse --abbrev-ref HEAD) --no-verify'
 [filter "media"]
 	required = true
 	clean = git media clean %f

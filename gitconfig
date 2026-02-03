@@ -41,6 +41,8 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 [core]
-	excludesfile = /Users/robertrichardson/.gitignore_global
+	excludesfile = /Users/rrichardson/.gitignore
 [pull]
 	ff = only
+[init]
+	defaultBranch = main

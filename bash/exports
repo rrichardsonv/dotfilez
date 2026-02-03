@@ -13,5 +13,6 @@ export PATH=$PYTHON3PKG:$PATH
 export ERL_AFLAGS="-kernel shell_history enabled"
 export JAVAC_PATH="/usr/bin/javac"
 export WX_CONFIG_PATH="/usr/local/bin/wx-config"
-export ERLANG_OPENSSL_PATH="/usr/local/opt/openssl" 
+export ERLANG_OPENSSL_PATH="/usr/local/opt/openssl"
+export JUST_JUSTFILE=".dotfilez/justfile"
 

@@ -26,12 +26,12 @@ function branch_name() { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.
 alias github=$'open `git config --get remote.origin.url | awk -F: \'{ print "https://github.com/"$2}\'`'
 alias commmit='commit'
 alias gbranches='git branch --column'
-alias undopush='git push -f origin HEAD^:master'
+alias undopush='git push -f origin HEAD^:main'
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gda='^diff^add'
 function gco {
   if [ $# -eq 0 ]; then
-    git checkout master
+    git checkout main
   else
     git checkout "$@"
   fi
@@ -51,30 +51,27 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
+# old rails stuff
 alias be='bundle exec'
 alias ber='bundle exec rails'
 alias berspec='bundle exec rspec'
 
-# fucking postgres
-alias pgfuck='pg_ctl -D /usr/local/var/postgres/ -l logfile stop -m fast;pg_ctl -D /usr/local/var/postgres/ -l logfile start;sleep 2;pg_ctl -D /usr/local/var/postgres/ -l logfile status'
-
-# fucking npm
-alias npmfuck='rm -rf node_modules/ && rm package-lock.json && npm cache clear --force && npm i'
-
-# fucking ecto
-alias ectofuck='mix ecto.drop && mix ecto.create && mix ecto.migrate'
-
-# fucking phx
-alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix ecto.drop && mix test'
-
-# fucking beam
-alias beamfuck='lsof -t -c beam.smp -a -i :"$(seq -s , 4000 +10 4090)" | xargs kill'
+# thanks Houa!
 alias fresh='mix do clean, deps.get, deps.compile --force, ecto.migrate'
 
-alias gslurp='git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'
+# unfuck postgres
+alias pgfuck='pg_ctl -D /usr/local/var/postgres/ -l logfile stop -m fast;pg_ctl -D /usr/local/var/postgres/ -l logfile start;sleep 2;pg_ctl -D /usr/local/var/postgres/ -l logfile status'
 
-alias cars_web.server="beamfuck;mix cmd --app cars_web 'mix phx.server'"
-alias admin_web.server="beamfuck;mix cmd --app admin_web 'mix phx.server'"
-alias cars_api.server="beamfuck;mix cmd --app cars_api 'mix phx.server'"
-alias dealer_web.server="beamfuck;mix cmd --app dealer_web 'mix phx.server'"
-alias phx.s="NO_OBAN=true iex -S mix phx.server"
+# unfuck npm
+alias npmfuck='rm -rf node_modules/ && rm package-lock.json && npm cache clear --force && npm i'
+
+# unfuck ecto
+alias ectofuck='mix ecto.drop && mix ecto.create && mix ecto.migrate'
+
+# unfuck phx
+alias phxfuck='mix npm.install && mix deps.get && ectofuck && MIX_ENV=test mix ecto.drop && mix test'
+
+# unfuck beam
+alias beamfuck='lsof -t -c beam.smp -a -i :"$(seq -s , 4000 +10 4090)" | xargs kill'
+
+alias gslurp='git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'
